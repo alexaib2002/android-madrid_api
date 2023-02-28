@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="12dp"
+    tools:context=".InstitutionItem">
+
+    <TextView
+        android:id="@+id/textViewInstitutionName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Centro de Enseñanza de Ejemplo"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textViewAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calle de Ejemplo 2" />
+</LinearLayout>

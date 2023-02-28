@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Listado" />
-    <item android:title="Mapa" />
+    <item
+        android:id="@+id/menuItemList"
+        android:title="Listado" />
+    <item
+        android:id="@+id/menuItemMap"
+        android:title="Mapa" />
 </menu>
