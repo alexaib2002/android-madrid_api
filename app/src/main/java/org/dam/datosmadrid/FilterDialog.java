@@ -26,6 +26,7 @@ public class FilterDialog extends DialogFragment {
 
     private FilterAcceptListener acceptListener;
     private Consumer<Call<MadridQueryResult>> madridQueryResultSetter;
+    private Consumer<String> filterTextSetter;
 
     @NonNull
     @Override
@@ -50,6 +51,7 @@ public class FilterDialog extends DialogFragment {
 
     public void updateCallables(MainActivity mainActivity) {
         madridQueryResultSetter = mainActivity::setApiCall;
+        filterTextSetter = mainActivity::setFilterText;
     }
 
     private class FilterAcceptListener implements View.OnClickListener {
@@ -60,6 +62,7 @@ public class FilterDialog extends DialogFragment {
                 Toast.makeText(getContext(), "Utilizando filtro por defecto",
                         Toast.LENGTH_SHORT).show();
                 madridQueryResultSetter.accept(null);
+                filterTextSetter.accept("");
                 dismiss();
                 return;
             }
@@ -87,6 +90,10 @@ public class FilterDialog extends DialogFragment {
                 return;
             }
             madridQueryResultSetter.accept(call);
+            filterTextSetter.accept(String.format("Latitud:\t%s%nLongitud:\t%s%nDistancia:\t%s",
+                    editTextLat.getText().toString(),
+                    editTextLon.getText().toString(),
+                    editTextDist.getText().toString()));
             dismiss();
         }
     }

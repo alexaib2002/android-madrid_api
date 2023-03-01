@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnFilter;
     private Button btnQuery;
+    private TextView textViewFilter;
     private ConstraintLayout mainLayout;
 
     // Runs every time dataset gets updated,
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         updateMainFragment(ListViewFragment.newInstance(institutions));
         btnFilter = findViewById(R.id.btnFilter);
         btnQuery = findViewById(R.id.btnQuery);
+        textViewFilter = findViewById(R.id.textViewFilter);
         mainLayout = findViewById(R.id.mainLayout);
         setApiCall(null);
 
@@ -67,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
             this.apiCall = apiCall;
         else
             this.apiCall = ApiRestServices.getMadridResultService().queryResult();
+    }
+
+    public void setFilterText(String text) {
+        textViewFilter.setText(text);
     }
 
     private void updateMainFragment(@NonNull Fragment frag) {
