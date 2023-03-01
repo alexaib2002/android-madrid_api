@@ -1,28 +1,55 @@
 package org.dam.datosmadrid;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.dam.datosmadrid.retrofitdata.Graph;
+import org.dam.datosmadrid.retrofitdata.MadridQueryResult;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+
 public class MainActivity extends AppCompatActivity {
     private final ArrayList<Graph> institutions = new ArrayList<>();
+
+    private Button btnFilter;
+    private Button btnQuery;
+    private ConstraintLayout mainLayout;
+
+    // Runs every time dataset gets updated,
+    // notifies the current fragment to update its displayed data
+    private Runnable datasetUpdater;
+    // Lambda containing the API call,
+    // changed based on the filter values
+    private Call<MadridQueryResult> apiCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         updateMainFragment(ListViewFragment.newInstance(institutions));
-        findViewById(R.id.btnFilter).setOnClickListener(v -> {
-            // call API with filters
+        btnFilter = findViewById(R.id.btnFilter);
+        btnQuery = findViewById(R.id.btnQuery);
+        mainLayout = findViewById(R.id.mainLayout);
+        setApiCall(null);
+
+        btnFilter.setOnClickListener(v -> {
+            FilterDialog filterDialog = new FilterDialog();
+            filterDialog.updateCallables(this);
+            filterDialog.show(getSupportFragmentManager(), null);
         });
+        btnQuery.setOnClickListener(v -> retrieveData());
     }
 
     @Override
@@ -35,9 +62,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateMainFragment(Fragment frag) {
+    public void setApiCall(@Nullable Call<MadridQueryResult> apiCall) {
+        if (apiCall != null)
+            this.apiCall = apiCall;
+        else
+            this.apiCall = ApiRestServices.getMadridResultService().queryResult();
+    }
+
+    private void updateMainFragment(@NonNull Fragment frag) {
+        assert frag instanceof UpdatableDatasetHolder;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragContainer, frag);
         transaction.commit();
+        // Safely run after onCreation method of Fragment has been called
+        transaction.runOnCommit(() ->
+                datasetUpdater = ((UpdatableDatasetHolder) frag).getDatasetUpdate());
     }
+
+    private void retrieveData() {
+        try {
+            apiCall.enqueue(new ResultCallback((result) -> {
+                this.institutions.clear();
+                this.institutions.addAll(result.graph);
+                this.datasetUpdater.run();
+            }));
+        } catch (IllegalStateException e) {
+            Snackbar.make(mainLayout, R.string.err_already_executed, Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
 }

@@ -1,64 +1,93 @@
 package org.dam.datosmadrid;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FilterDialog#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FilterDialog extends Fragment {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import com.google.android.material.snackbar.Snackbar;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import org.dam.datosmadrid.retrofitdata.MadridQueryResult;
 
-    public FilterDialog() {
-        // Required empty public constructor
-    }
+import java.util.function.Consumer;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FilterDialog.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FilterDialog newInstance(String param1, String param2) {
-        FilterDialog fragment = new FilterDialog();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+import retrofit2.Call;
 
+public class FilterDialog extends DialogFragment {
+    protected TextView editTextLat;
+    protected TextView editTextLon;
+    protected TextView editTextDist;
+
+    private FilterAcceptListener acceptListener;
+    private Consumer<Call<MadridQueryResult>> madridQueryResultSetter;
+
+    @NonNull
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        View v = getActivity().getLayoutInflater().inflate(R.layout.fragment_filter_dialog,
+                null);
+        editTextLat = v.findViewById(R.id.editTextLat);
+        editTextLon = v.findViewById(R.id.editTextLon);
+        editTextDist = v.findViewById(R.id.editTextDist);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.title_filter_dialog)
+                .setView(v)
+                .setPositiveButton(getResources().getText(R.string.filter_apply_btn), null)
+                .setNegativeButton(getResources().getString(R.string.filter_cancel_btn),
+                        (dialog, which) -> dialog.dismiss())
+                .show();
+        acceptListener = new FilterAcceptListener();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(acceptListener);
+        return alertDialog;
+    }
+
+    public void updateCallables(MainActivity mainActivity) {
+        madridQueryResultSetter = mainActivity::setApiCall;
+    }
+
+    private class FilterAcceptListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            if (editTextLat.getText().toString().isEmpty() && editTextLon.getText().toString()
+                    .isEmpty() && editTextDist.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), "Utilizando filtro por defecto",
+                        Toast.LENGTH_SHORT).show();
+                madridQueryResultSetter.accept(null);
+                dismiss();
+                return;
+            }
+            if (editTextLat.getText().toString().isEmpty()) {
+                editTextLat.setError("La latitud no puede estar vacía");
+                return;
+            }
+            if (editTextLon.getText().toString().isEmpty()) {
+                editTextLon.setError("La longitud no puede estar vacía");
+                return;
+            }
+            if (editTextDist.getText().toString().isEmpty()) {
+                editTextDist.setError("La distancia no puede estar vacía");
+                return;
+            }
+            Call<MadridQueryResult> call;
+            try {
+                call = ApiRestServices.getMadridResultService().queryResult(
+                        Double.parseDouble(editTextLat.getText().toString()),
+                        Double.parseDouble(editTextLon.getText().toString()),
+                        Integer.parseInt(editTextDist.getText().toString()));
+            } catch (NumberFormatException e) {
+                Snackbar.make(getView(), "Error al parsear los números", Snackbar.LENGTH_SHORT)
+                        .show();
+                return;
+            }
+            madridQueryResultSetter.accept(call);
+            dismiss();
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_filter_dialog, container, false);
     }
 }

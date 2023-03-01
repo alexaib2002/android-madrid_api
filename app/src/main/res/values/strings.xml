@@ -2,4 +2,9 @@
     <string name="app_name">DatosMadrid</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="filter_apply_btn">Aceptar</string>
+    <string name="filter_cancel_btn">Cancelar</string>
+    <string name="title_filter_dialog">Selección de filtro</string>
+    <string name="err_already_executed">Consulta ya ejecutada, por favor, introduce una nueva consulta</string>
+    <string name="str_nodir" />
 </resources>

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FilterDialog" >
+    android:padding="16dp"
+    tools:context=".FilterDialog">
 
     <EditText
         android:id="@+id/editTextLat"
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Latitud"
-        android:inputType="numberDecimal" />
+        android:inputType="numberSigned|numberDecimal"
+        android:paddingVertical="16dp" />
 
     <EditText
         android:id="@+id/editTextLon"
@@ -20,7 +22,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Longitud"
-        android:inputType="numberDecimal" />
+        android:inputType="numberSigned|numberDecimal"
+        android:paddingVertical="16dp" />
 
     <EditText
         android:id="@+id/editTextDist"
@@ -28,5 +31,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Distancia en metros"
-        android:inputType="number" />
+        android:inputType="number"
+        android:paddingVertical="16dp" />
 </LinearLayout>

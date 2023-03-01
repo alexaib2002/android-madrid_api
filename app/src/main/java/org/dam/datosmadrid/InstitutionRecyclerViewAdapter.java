@@ -15,9 +15,12 @@ import java.util.ArrayList;
 public class InstitutionRecyclerViewAdapter
         extends RecyclerView.Adapter<InstitutionRecyclerViewAdapter.InstitutionHolder> {
     private final ArrayList<Graph> institutionList;
+    private final View.OnClickListener listener;
 
-    public InstitutionRecyclerViewAdapter(ArrayList<Graph> institutionList) {
+    public InstitutionRecyclerViewAdapter(ArrayList<Graph> institutionList,
+                                          View.OnClickListener listener) {
         this.institutionList = institutionList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -25,6 +28,7 @@ public class InstitutionRecyclerViewAdapter
     public InstitutionHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_institution_item, parent, false);
+        v.setOnClickListener(listener);
         return new InstitutionHolder(v);
     }
 
@@ -32,7 +36,10 @@ public class InstitutionRecyclerViewAdapter
     public void onBindViewHolder(@NonNull InstitutionHolder holder, int position) {
         Graph item = institutionList.get(position);
         holder.getTextViewInstitutionName().setText(item.getTitle());
-        holder.getTextViewAddress().setText(item.getAddress().toString());
+        if (item.getAddress() != null)
+            holder.getTextViewAddress().setText(item.getAddress().toString());
+        else
+            holder.getTextViewAddress().setText(R.string.str_nodir);
     }
 
     @Override

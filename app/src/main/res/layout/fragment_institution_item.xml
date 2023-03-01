@@ -11,12 +11,12 @@
         android:id="@+id/textViewInstitutionName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Centro de Enseñanza de Ejemplo"
+        android:text="Centro de Enseñanza Placeholder"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textViewAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calle de Ejemplo 2" />
+        android:text="Calle Placeholder Placeholder" />
 </LinearLayout>

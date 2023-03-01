@@ -42,4 +42,8 @@ public class Graph implements Serializable
     public Address getAddress() {
         return address;
     }
+
+    public String getIdJson() {
+        return idJson;
+    }
 }
