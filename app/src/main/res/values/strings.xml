@@ -7,4 +7,9 @@
     <string name="title_filter_dialog">Selección de filtro</string>
     <string name="err_already_executed">Consulta ya ejecutada, por favor, introduce una nueva consulta</string>
     <string name="str_nodir" />
+    <string name="detail_locality">Localidad</string>
+    <string name="detail_address">Dirección</string>
+    <string name="detail_access">Valoración de accesibilidad</string>
+    <string name="menu_list">Listado</string>
+    <string name="menu_map">Mapa</string>
 </resources>

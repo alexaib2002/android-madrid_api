@@ -11,7 +11,6 @@
         android:id="@+id/textViewDetailTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Centro Placeholder"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
-                android:text="Localidad"
+                android:text="@string/detail_locality"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -44,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Dirección"
+                android:text="@string/detail_address"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -64,8 +63,7 @@
                 <TextView
                     android:id="@+id/textViewDetailLocality"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Madrid" />
+                    android:layout_height="wrap_content" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -77,7 +75,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="28800"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -86,7 +83,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Calle Placeholder"
                 android:textAlignment="center" />
         </TableRow>
 
@@ -98,7 +94,6 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Placeholder organizacion"
         android:textAlignment="textStart"
         app:layout_constraintBottom_toTopOf="@+id/textViewAccessValTitle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +104,6 @@
         android:id="@+id/textViewDetailAccessLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Valoración de accesibilidad"
+        android:text="@string/detail_access"
         app:layout_constraintBottom_toTopOf="@+id/textViewDetailAccessLevel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
