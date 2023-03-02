@@ -12,13 +12,13 @@ import org.dam.datosmadrid.retrofitdata.Graph;
 
 import java.util.ArrayList;
 
-public class InstitutionRecyclerViewAdapter
-        extends RecyclerView.Adapter<InstitutionRecyclerViewAdapter.InstitutionHolder> {
+public class InstitutionListRvAdapter
+        extends RecyclerView.Adapter<InstitutionListRvAdapter.InstitutionHolder> {
     private final ArrayList<Graph> institutionList;
     private final View.OnClickListener listener;
 
-    public InstitutionRecyclerViewAdapter(ArrayList<Graph> institutionList,
-                                          View.OnClickListener listener) {
+    public InstitutionListRvAdapter(ArrayList<Graph> institutionList,
+                                    View.OnClickListener listener) {
         this.institutionList = institutionList;
         this.listener = listener;
     }

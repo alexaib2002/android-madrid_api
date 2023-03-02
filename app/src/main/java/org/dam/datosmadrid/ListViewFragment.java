@@ -17,10 +17,9 @@ import org.dam.datosmadrid.retrofitdata.Graph;
 import java.util.ArrayList;
 
 public class ListViewFragment extends Fragment implements UpdatableDatasetHolder {
-    private static final String ARG_PARAM_INST = "INSTITUTIONS";
 
     private RecyclerView recyclerView;
-    private InstitutionRecyclerViewAdapter adapter;
+    private InstitutionListRvAdapter adapter;
     private ArrayList<Graph> institutions;
 
     public static ListViewFragment newInstance(@NonNull ArrayList<Graph> institutions) {
@@ -36,7 +35,7 @@ public class ListViewFragment extends Fragment implements UpdatableDatasetHolder
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             institutions = (ArrayList<Graph>) getArguments().getSerializable(ARG_PARAM_INST);
-            adapter = new InstitutionRecyclerViewAdapter(institutions, v -> {
+            adapter = new InstitutionListRvAdapter(institutions, v -> {
                 Intent intent = new Intent(getContext(), DetailActivity.class);
                 intent.putExtra("url", institutions.get(recyclerView
                         .getChildAdapterPosition(v)).getIdJson());

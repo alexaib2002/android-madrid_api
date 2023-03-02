@@ -19,9 +19,6 @@ import org.dam.datosmadrid.retrofitdata.Graph;
 import java.util.ArrayList;
 
 public class MapViewFragment extends Fragment implements UpdatableDatasetHolder {
-
-    private static final String ARG_PARAM_INST = "INSTITUTIONS";
-
     protected SupportMapFragment map;
     private ArrayList<Graph> institutions;
 
