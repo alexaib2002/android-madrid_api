@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         textViewFilter = findViewById(R.id.textViewFilter);
         mainLayout = findViewById(R.id.mainLayout);
         setApiCall(null);
+        setFilterText("");
 
         btnFilter.setOnClickListener(v -> {
             FilterDialog filterDialog = new FilterDialog();
@@ -60,9 +63,15 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.menuItemList) {
             updateMainFragment(ListViewFragment.newInstance(institutions));
         } else if (item.getItemId() == R.id.menuItemMap) {
-            // TODO implement map
+            updateMainFragment(MapViewFragment.newInstance(institutions));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     public void setApiCall(@Nullable Call<MadridQueryResult> apiCall) {
@@ -73,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFilterText(String text) {
+        if (text.isEmpty())
+            textViewFilter.setVisibility(View.GONE);
+        else
+            textViewFilter.setVisibility(View.VISIBLE);
         textViewFilter.setText(text);
     }
 
