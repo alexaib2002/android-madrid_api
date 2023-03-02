@@ -63,7 +63,8 @@ public class FilterDialog extends DialogFragment {
         public void onClick(View v) {
             if (editTextLat.getText().toString().isEmpty() && editTextLon.getText().toString()
                     .isEmpty() && editTextDist.getText().toString().isEmpty()) {
-                Snackbar.make(mainLayoutGetter.get(), "Utilizando filtro por defecto",
+                Snackbar.make(mainLayoutGetter.get(), getResources().getString(R.string
+                                .hint_default_filter),
                         Snackbar.LENGTH_SHORT).show();
                 madridQueryResultSetter.accept(null);
                 filterTextSetter.accept("");
@@ -71,15 +72,15 @@ public class FilterDialog extends DialogFragment {
                 return;
             }
             if (editTextLat.getText().toString().isEmpty()) {
-                editTextLat.setError("La latitud no puede estar vacía");
+                editTextLat.setError(getString(R.string.err_lat_empty));
                 return;
             }
             if (editTextLon.getText().toString().isEmpty()) {
-                editTextLon.setError("La longitud no puede estar vacía");
+                editTextLon.setError(getString(R.string.err_lon_empty));
                 return;
             }
             if (editTextDist.getText().toString().isEmpty()) {
-                editTextDist.setError("La distancia no puede estar vacía");
+                editTextDist.setError(getString(R.string.err_dist_empty));
                 return;
             }
             Call<MadridQueryResult> call;
@@ -89,12 +90,13 @@ public class FilterDialog extends DialogFragment {
                         Double.parseDouble(editTextLon.getText().toString()),
                         Integer.parseInt(editTextDist.getText().toString()));
             } catch (NumberFormatException e) {
-                Snackbar.make(getView(), "Error al parsear los números", Snackbar.LENGTH_SHORT)
+                Snackbar.make(getView(), getResources().getString(R.string.err_no_parse),
+                                Snackbar.LENGTH_SHORT)
                         .show();
                 return;
             }
             madridQueryResultSetter.accept(call);
-            filterTextSetter.accept(String.format("Latitud:\t%s%nLongitud:\t%s%nDistancia:\t%s",
+            filterTextSetter.accept(String.format(getString(R.string.filter_str_format),
                     editTextLat.getText().toString(),
                     editTextLon.getText().toString(),
                     editTextDist.getText().toString()));

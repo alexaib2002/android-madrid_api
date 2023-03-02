@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class ListViewFragment extends Fragment implements UpdatableDatasetHolder {
 
+    public static final String EXTRA_URL = "url";
+
     private RecyclerView recyclerView;
     private InstitutionListRvAdapter adapter;
     private ArrayList<Graph> institutions;
@@ -37,7 +39,7 @@ public class ListViewFragment extends Fragment implements UpdatableDatasetHolder
             institutions = (ArrayList<Graph>) getArguments().getSerializable(ARG_PARAM_INST);
             adapter = new InstitutionListRvAdapter(institutions, v -> {
                 Intent intent = new Intent(getContext(), DetailActivity.class);
-                intent.putExtra("url", institutions.get(recyclerView
+                intent.putExtra(EXTRA_URL, institutions.get(recyclerView
                         .getChildAdapterPosition(v)).getIdJson());
                 startActivity(intent);
             });

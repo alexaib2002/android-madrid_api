@@ -61,7 +61,8 @@ public class MapViewFragment extends Fragment implements UpdatableDatasetHolder 
                 boundsBuilder.include(pos);
             }
             googleMap.animateCamera(CameraUpdateFactory
-                    .newLatLngBounds(boundsBuilder.build(), 128));
+                    .newLatLngBounds(boundsBuilder.build(), getResources()
+                            .getInteger(R.integer.map_pad)));
         });
     }
 }

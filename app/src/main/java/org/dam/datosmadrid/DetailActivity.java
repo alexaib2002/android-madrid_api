@@ -31,14 +31,15 @@ public class DetailActivity extends AppCompatActivity {
         textViewDetailOrganizationDesc = findViewById(R.id.textViewDetailOrganizationDesc);
         textViewDetailAccessLevel = findViewById(R.id.textViewDetailAccessLevel);
 
-        String[] urlSplit = getIntent().getStringExtra("url").split("/");
+        String[] urlSplit = getIntent().getStringExtra(ListViewFragment.EXTRA_URL).split("/");
         String jsonUrl = urlSplit[urlSplit.length - 1];
         // Initialize detailedInstitution inside lambda
         ApiRestServices.getMadridResultService()
                 .queryResult(jsonUrl)
                 .enqueue(new ResultCallback(result -> {
                     if (result.graph.size() != 1)
-                        System.err.println("Unexpected multiple elements return on DetailActivity");
+                        System.err.println(getResources().getString(R.string
+                                .err_unexpected_query_size));
                     this.detailedInstitution = result.graph.get(0);
                     this.textViewDetailTitle.setText(detailedInstitution.getTitle());
                     this.textViewDetailLocality.setText(detailedInstitution.address.locality);

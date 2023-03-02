@@ -12,4 +12,11 @@
     <string name="detail_access">Valoración de accesibilidad</string>
     <string name="menu_list">Listado</string>
     <string name="menu_map">Mapa</string>
+    <string name="err_unexpected_query_size">Unexpected multiple elements return on DetailActivity</string>
+    <string name="err_lat_empty">La latitud no puede estar vacía</string>
+    <string name="err_lon_empty">La longitud no puede estar vacía</string>
+    <string name="err_dist_empty">La distancia no puede estar vacía</string>
+    <string name="hint_default_filter">Utilizando filtro por defecto</string>
+    <string name="err_no_parse">Error al parsear los números</string>
+    <string name="filter_str_format">Latitud:\t%s%nLongitud:\t%s%nDistancia:\t%s</string>
 </resources>
