@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         textViewFilter.setText(text);
     }
 
+    public ConstraintLayout getMainLayout() {
+        return mainLayout;
+    }
+
     private void updateMainFragment(@NonNull Fragment frag) {
         assert frag instanceof UpdatableDatasetHolder;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

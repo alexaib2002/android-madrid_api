@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -16,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.dam.datosmadrid.retrofitdata.MadridQueryResult;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import retrofit2.Call;
 
@@ -27,6 +29,7 @@ public class FilterDialog extends DialogFragment {
     private FilterAcceptListener acceptListener;
     private Consumer<Call<MadridQueryResult>> madridQueryResultSetter;
     private Consumer<String> filterTextSetter;
+    protected Supplier<ConstraintLayout> mainLayoutGetter;
 
     @NonNull
     @Override
@@ -52,6 +55,7 @@ public class FilterDialog extends DialogFragment {
     public void updateCallables(MainActivity mainActivity) {
         madridQueryResultSetter = mainActivity::setApiCall;
         filterTextSetter = mainActivity::setFilterText;
+        mainLayoutGetter = mainActivity::getMainLayout;
     }
 
     private class FilterAcceptListener implements View.OnClickListener {
@@ -59,8 +63,8 @@ public class FilterDialog extends DialogFragment {
         public void onClick(View v) {
             if (editTextLat.getText().toString().isEmpty() && editTextLon.getText().toString()
                     .isEmpty() && editTextDist.getText().toString().isEmpty()) {
-                Toast.makeText(getContext(), "Utilizando filtro por defecto",
-                        Toast.LENGTH_SHORT).show();
+                Snackbar.make(mainLayoutGetter.get(), "Utilizando filtro por defecto",
+                        Snackbar.LENGTH_SHORT).show();
                 madridQueryResultSetter.accept(null);
                 filterTextSetter.accept("");
                 dismiss();
