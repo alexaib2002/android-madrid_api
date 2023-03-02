@@ -75,10 +75,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setApiCall(@Nullable Call<MadridQueryResult> apiCall) {
-        if (apiCall != null)
-            this.apiCall = apiCall;
-        else
-            this.apiCall = ApiRestServices.getMadridResultService().queryResult();
+        this.apiCall = apiCall != null ? apiCall : ApiRestServices
+                .getMadridResultService().queryResult();
     }
 
     public void setFilterText(String text) {
