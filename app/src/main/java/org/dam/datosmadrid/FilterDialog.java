@@ -26,7 +26,6 @@ public class FilterDialog extends DialogFragment {
     protected TextView editTextLon;
     protected TextView editTextDist;
 
-    private FilterAcceptListener acceptListener;
     private Consumer<Call<MadridQueryResult>> madridQueryResultSetter;
     private Consumer<String> filterTextSetter;
     protected Supplier<ConstraintLayout> mainLayoutGetter;
@@ -53,8 +52,8 @@ public class FilterDialog extends DialogFragment {
                 .setNegativeButton(getResources().getString(R.string.filter_cancel_btn),
                         (dialog, which) -> dialog.dismiss())
                 .create();
-        acceptListener = new FilterAcceptListener();
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(acceptListener);
+        alertDialog.setOnShowListener(dialog -> alertDialog
+                .getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new FilterAcceptListener()));
         return alertDialog;
     }
 
