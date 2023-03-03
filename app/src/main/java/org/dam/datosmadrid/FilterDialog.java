@@ -31,6 +31,12 @@ public class FilterDialog extends DialogFragment {
     private Consumer<String> filterTextSetter;
     protected Supplier<ConstraintLayout> mainLayoutGetter;
 
+    public FilterDialog(Consumer<Call<MadridQueryResult>> madridQueryResultSetter, Consumer<String> filterTextSetter, Supplier<ConstraintLayout> mainLayoutGetter) {
+        this.madridQueryResultSetter = madridQueryResultSetter;
+        this.filterTextSetter = filterTextSetter;
+        this.mainLayoutGetter = mainLayoutGetter;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -46,16 +52,10 @@ public class FilterDialog extends DialogFragment {
                 .setPositiveButton(getResources().getText(R.string.filter_apply_btn), null)
                 .setNegativeButton(getResources().getString(R.string.filter_cancel_btn),
                         (dialog, which) -> dialog.dismiss())
-                .show();
+                .create();
         acceptListener = new FilterAcceptListener();
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(acceptListener);
         return alertDialog;
-    }
-
-    public void updateCallables(MainActivity mainActivity) {
-        madridQueryResultSetter = mainActivity::setApiCall;
-        filterTextSetter = mainActivity::setFilterText;
-        mainLayoutGetter = mainActivity::getMainLayout;
     }
 
     private class FilterAcceptListener implements View.OnClickListener {

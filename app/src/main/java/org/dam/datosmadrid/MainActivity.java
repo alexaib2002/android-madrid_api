@@ -51,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
         setFilterText("");
 
         btnFilter.setOnClickListener(v -> {
-            FilterDialog filterDialog = new FilterDialog();
-            filterDialog.updateCallables(this);
+            FilterDialog filterDialog = new FilterDialog(
+                    this::setApiCall,
+                    this::setFilterText,
+                    this::getMainLayout);
             filterDialog.show(getSupportFragmentManager(), null);
         });
         btnQuery.setOnClickListener(v -> retrieveData());
