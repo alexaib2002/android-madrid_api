@@ -64,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menuItemList) {
             updateMainFragment(ListViewFragment.newInstance(institutions));
+            btnQuery.setText(R.string.str_list_query);
         } else if (item.getItemId() == R.id.menuItemMap) {
             updateMainFragment(MapViewFragment.newInstance(institutions));
+            btnQuery.setText(R.string.str_map_query);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -99,16 +101,23 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragContainer, frag);
         transaction.commit();
         // Safely run after onCreation method of Fragment has been called
-        transaction.runOnCommit(() ->
-                datasetUpdater = ((UpdatableDatasetHolder) frag).getDatasetUpdate());
+        transaction.runOnCommit(() -> {
+            datasetUpdater = ((UpdatableDatasetHolder) frag).getDatasetUpdate();
+            if (institutions.size() > 0)
+                datasetUpdater.run();
+        });
     }
 
     private void retrieveData() {
         try {
-            apiCall.enqueue(new ResultCallback((result) -> {
+            apiCall.clone().enqueue(new ResultCallback((result) -> {
                 this.institutions.clear();
                 this.institutions.addAll(result.graph);
-                this.datasetUpdater.run();
+                if (this.institutions.size() > 0)
+                    this.datasetUpdater.run();
+                else
+                    Snackbar.make(mainLayout, R.string.err_no_data_found, Snackbar.LENGTH_SHORT)
+                            .show();
             }));
         } catch (IllegalStateException e) {
             Snackbar.make(mainLayout, R.string.err_already_executed, Snackbar.LENGTH_SHORT)

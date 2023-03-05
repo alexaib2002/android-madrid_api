@@ -51,7 +51,7 @@ public class MapViewFragment extends Fragment implements UpdatableDatasetHolder 
         return () -> map.getMapAsync(googleMap -> {
             googleMap.clear();
             LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
-            LatLng pos;
+            LatLng pos = null;
             for (Graph institution: institutions) {
                 pos = new LatLng(institution.location.latitude,
                         institution.location.longitude);
@@ -60,6 +60,8 @@ public class MapViewFragment extends Fragment implements UpdatableDatasetHolder 
                         .title(institution.title));
                 boundsBuilder.include(pos);
             }
+            if (pos == null)
+                return;
             googleMap.animateCamera(CameraUpdateFactory
                     .newLatLngBounds(boundsBuilder.build(), getResources()
                             .getInteger(R.integer.map_pad)));

@@ -54,6 +54,7 @@ public class FilterDialog extends DialogFragment {
                 .create();
         alertDialog.setOnShowListener(dialog -> alertDialog
                 .getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new FilterAcceptListener()));
+        alertDialog.setCanceledOnTouchOutside(false); // modal dialog
         return alertDialog;
     }
 
@@ -89,7 +90,7 @@ public class FilterDialog extends DialogFragment {
                         Double.parseDouble(editTextLon.getText().toString()),
                         Integer.parseInt(editTextDist.getText().toString()));
             } catch (NumberFormatException e) {
-                Snackbar.make(getView(), getResources().getString(R.string.err_no_parse),
+                Snackbar.make(v, getResources().getString(R.string.err_no_parse),
                                 Snackbar.LENGTH_SHORT)
                         .show();
                 return;

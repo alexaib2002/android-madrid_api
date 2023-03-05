@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">DatosMadrid</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="filter_apply_btn">Aceptar</string>
     <string name="filter_cancel_btn">Cancelar</string>
     <string name="title_filter_dialog">Selección de filtro</string>
@@ -18,4 +17,7 @@
     <string name="hint_default_filter">Utilizando filtro por defecto</string>
     <string name="err_no_parse">Error al parsear los números</string>
     <string name="filter_str_format">Latitud:\t%sº%nLongitud:\t%sº%nDistancia:\t%s metros</string>
+    <string name="err_no_data_found">No se ha encontrado ningún resultado con el filtro seleccionado</string>
+    <string name="str_list_query">Consultar listado</string>
+    <string name="str_map_query">Consultar mapa</string>
 </resources>
